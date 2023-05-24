@@ -4,8 +4,8 @@
 
 @model BestRestaurants.Models.Restaurant
 
-<p><strong>NOTE:</strong> You need to have at least one cuisine before you can add a restaurant!</p>
-<p>Go to @Html.ActionLink("this page", "Create", "Cuisines") to create a cuisine.</p>
+<p>@Html.ValidationMessageFor(model => model.CuisineId, "", new { @class = "text-danger", @style = "font-weight: 600;" })</p>
+<p>@Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger", @style = "font-weight: 600;" })</p>
 
 <h4>Add a new restaurants</h4>
 @using (Html.BeginForm())

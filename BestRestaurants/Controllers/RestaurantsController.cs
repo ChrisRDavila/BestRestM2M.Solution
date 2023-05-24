@@ -37,19 +37,25 @@ namespace BestRestaurants.Controllers
     [HttpPost]
     public ActionResult Create(Restaurant restaurant)
     {
-      if (restaurant.CuisineId == 0)
+      if (!ModelState.IsValid)
       {
-        return RedirectToAction("Create");
+          ViewBag.CuisineId = new SelectList(_db.Cuisines, "CuisineId", "Type");
+          return View(restaurant);
       }
+      else
+      {
       _db.Restaurants.Add(restaurant);
       _db.SaveChanges();
       return RedirectToAction("Index");
-    }
+      }
+    }  
 
     public ActionResult Details(int id)
     {
       Restaurant thisRestaurant = _db.Restaurants
                                     .Include(restaurant => restaurant.Cuisine)
+                                    .Include(restaurant => restaurant.JoinEntities)
+                                    .ThenInclude(join => join.Review)
                                     .FirstOrDefault(restaurant => restaurant.RestaurantId == id);
       return View(thisRestaurant);
     }
