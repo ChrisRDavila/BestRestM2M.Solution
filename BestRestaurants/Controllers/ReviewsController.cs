@@ -71,5 +71,35 @@ namespace BestRestaurants.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
+
+    public ActionResult AddRestaurant(int id)
+    {
+      Review thisReview = _db.Reviews.FirstOrDefault(reviews => reviews.ReviewId == id);
+      ViewBag.RestaurantId = new SelectList(_db.Restaurants, "RestaurantId", "Name");
+      return View(thisReview);
+    }
+
+    [HttpPost]
+    public ActionResult AddRestaurant(Review review, int restaurantId)
+    {
+      #nullable enable
+      RestaurantReview? joinEntity = _db.RestaurantReviews.FirstOrDefault(join => (join.RestaurantId == restaurantId && join.ReviewId == review.ReviewId));
+      #nullable disable
+      if (joinEntity == null && restaurantId != 0)
+      {
+        _db.RestaurantReviews.Add(new RestaurantReview() { RestaurantId = restaurantId, ReviewId = review.ReviewId });
+        _db.SaveChanges();
+      }
+      return RedirectToAction("Details", new { id = review.ReviewId });
+    }
+
+    [HttpPost]
+    public ActionResult DeleteJoin(int joinId)
+    {
+      RestaurantReview joinEntry = _db.RestaurantReviews.FirstOrDefault(entry => entry.RestaurantReviewId == joinId);
+      _db.RestaurantReviews.Remove(joinEntry);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
   }
 }    
