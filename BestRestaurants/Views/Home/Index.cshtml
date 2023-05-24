@@ -1,6 +1,47 @@
 @{
   Layout = "_Layout";
 }
+@using BestRestaurants.Models;
 
 <h1>Welcome to the Best Restaurants App!</h1>
-<p>@Html.ActionLink("See all restaurants", "Index", "Restaurants")</p><p>@Html.ActionLink("See all cuisines", "Index", "Cuisines")</p>
+<hr>
+
+<h4>Cuisines</h4>
+@if (Model["cuisines"].Length == 0)
+{
+  <p>No cuisines have been added yet!</p>
+}
+<ul>
+  @foreach (Cuisine cuisine in Model["cuisines"])
+  {
+    <li>@Html.ActionLink(@cuisine.Type, "Details", "Cuisines", new { id = @cuisine.CuisineId})</li>
+  }
+</ul>
+
+<h4>Restaurants</h4>
+@if (Model["restaurants"].Length == 0)
+{
+  <p>No restaurants have been added yet!</p>
+}
+<ul>
+  @foreach (Restaurant restaurant in Model["restaurants"])
+  {
+    <li>@Html.ActionLink(@restaurant.Name, "Details", "Restaurants", new { id = @restaurant.RestaurantId})</li>
+  }
+</ul>
+
+<h4>Reviews</h4>
+@if (Model["reviews"].Length == 0)
+{
+  <p>No reviews have been added yet!</p>
+}
+<ul>
+  @foreach (Review review in Model["reviews"])
+  {
+    <li>@Html.ActionLink(@review.Critic, "Details", "Reviews", new { id = @review.ReviewId})</li>
+  }
+</ul>
+
+<p>@Html.ActionLink("See all restaurants", "Index", "Restaurants")</p>
+<p>@Html.ActionLink("See all cuisines", "Index", "Cuisines")</p>
+<p>@Html.ActionLink("See all reviews", "Index", "Reviews")</p>
