@@ -11,7 +11,9 @@
     <link rel="stylesheet" href="./css/styles.css">
   </head>
   <body>
-    @RenderBody()
-    @await Html.PartialAsync("footer")
+    <div class="container">
+      @RenderBody()
+      @await Html.PartialAsync("footer")
+    </div>
   </body>
 </html>

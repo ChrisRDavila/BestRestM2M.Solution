@@ -1,0 +1,19 @@
+@{
+  Layout = "_Layout";
+}
+
+@model BestRestaurants.Models.Tag
+
+<h1>Edit tag</h1>
+
+<h4>Edit this tag: @Html.DisplayFor(model =>model.Description)</h4>
+
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(model => model.Description)
+    @Html.TextBoxFor(model => model.Description)
+
+    <input type="submit" value="Save" class="btn btn-primary" />
+}
+
+<p>@Html.ActionLink("Back to tags list", "Index")</p>

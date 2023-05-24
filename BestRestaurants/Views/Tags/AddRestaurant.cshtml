@@ -2,15 +2,15 @@
   Layout = "_Layout";
 }
 
-@model BestRestaurants.Models.Review
+@model BestRestaurants.Models.Tag
 
 <h2>Add a restaurant</h2>
 
-<h4>Add a restaurant to this Critic: @Html.DisplayFor(model => model.Critic)</h4>
+<h4>Add a restaurant to this Tag: @Html.DisplayFor(model => model.Description)</h4>
 
 @using (Html.BeginForm())
 {
-    @Html.HiddenFor(model => model.ReviewId)
+    @Html.HiddenFor(model => model.TagId)
 
     @Html.Label("Select restaurant")
     @Html.DropDownList("RestaurantId")

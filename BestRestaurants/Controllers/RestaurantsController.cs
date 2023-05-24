@@ -21,7 +21,8 @@ namespace BestRestaurants.Controllers
     {
       List<Restaurant> model = _db.Restaurants
                                   .Include(restaurant => restaurant.Cuisine)
-                                  .OrderBy(restaurant => restaurant.Cuisine.Type) //added code to order by ascending
+                                  .OrderBy(restaurant => restaurant.Cuisine.Type)
+                                  .ThenBy(restaurant => restaurant.Name)
                                   .ToList();
       ViewBag.PageTitle = "View All Restaurants";                     
       return View(model);
@@ -55,7 +56,7 @@ namespace BestRestaurants.Controllers
       Restaurant thisRestaurant = _db.Restaurants
                                     .Include(restaurant => restaurant.Cuisine)
                                     .Include(restaurant => restaurant.JoinEntities)
-                                    .ThenInclude(join => join.Review)
+                                    .ThenInclude(join => join.Tag)
                                     .FirstOrDefault(restaurant => restaurant.RestaurantId == id);
       return View(thisRestaurant);
     }
@@ -90,22 +91,22 @@ namespace BestRestaurants.Controllers
       return RedirectToAction("Index");
     }
 
-    public ActionResult AddReview(int id)
+    public ActionResult AddTag(int id)
     {
       Restaurant thisRestaurant = _db.Restaurants.FirstOrDefault(restaurants => restaurants.RestaurantId == id);
-      ViewBag.ReviewId = new SelectList(_db.Reviews, "ReviewId", "Critic");
+      ViewBag.TagId = new SelectList(_db.Tags, "TagId", "Description");
       return View(thisRestaurant);
     }
 
     [HttpPost]
-    public ActionResult AddReview(Restaurant restaurant, int reviewId)
+    public ActionResult AddTag(Restaurant restaurant, int tagId)
     {
       #nullable enable
-      RestaurantReview? joinEntity = _db.RestaurantReviews.FirstOrDefault(join => (join.ReviewId == reviewId && join.RestaurantId == restaurant.RestaurantId));
+      RestaurantTag? joinEntity = _db.RestaurantTags.FirstOrDefault(join => (join.TagId == tagId && join.RestaurantId == restaurant.RestaurantId));
       #nullable disable
-      if (joinEntity == null && reviewId != 0)
+      if (joinEntity == null && tagId != 0)
       {
-        _db.RestaurantReviews.Add(new RestaurantReview() { ReviewId = reviewId, RestaurantId = restaurant.RestaurantId });
+        _db.RestaurantTags.Add(new RestaurantTag() { TagId = tagId, RestaurantId = restaurant.RestaurantId });
         _db.SaveChanges();
       }
       return RedirectToAction("Details", new { id = restaurant.RestaurantId });
@@ -114,8 +115,8 @@ namespace BestRestaurants.Controllers
     [HttpPost]
     public ActionResult DeleteJoin(int joinId)
     {
-      RestaurantReview joinEntry = _db.RestaurantReviews.FirstOrDefault(entry => entry.RestaurantReviewId == joinId);
-      _db.RestaurantReviews.Remove(joinEntry);
+      RestaurantTag joinEntry = _db.RestaurantTags.FirstOrDefault(entry => entry.RestaurantTagId == joinId);
+      _db.RestaurantTags.Remove(joinEntry);
       _db.SaveChanges();
       return RedirectToAction("Index");
     }

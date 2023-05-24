@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BestRestaurants.Migrations
 {
     [DbContext(typeof(BestRestaurantsContext))]
-    [Migration("20230524165707_addReviewTable")]
-    partial class addReviewTable
+    [Migration("20230524205340_RefactorTag")]
+    partial class RefactorTag
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,45 +54,39 @@ namespace BestRestaurants.Migrations
                     b.ToTable("Restaurants");
                 });
 
-            modelBuilder.Entity("BestRestaurants.Models.RestaurantReview", b =>
+            modelBuilder.Entity("BestRestaurants.Models.RestaurantTag", b =>
                 {
-                    b.Property<int>("RestaurantReviewId")
+                    b.Property<int>("RestaurantTagId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<int>("RestaurantId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ReviewId")
+                    b.Property<int>("TagId")
                         .HasColumnType("int");
 
-                    b.HasKey("RestaurantReviewId");
+                    b.HasKey("RestaurantTagId");
 
                     b.HasIndex("RestaurantId");
 
-                    b.HasIndex("ReviewId");
+                    b.HasIndex("TagId");
 
-                    b.ToTable("RestaurantReviews");
+                    b.ToTable("RestaurantTags");
                 });
 
-            modelBuilder.Entity("BestRestaurants.Models.Review", b =>
+            modelBuilder.Entity("BestRestaurants.Models.Tag", b =>
                 {
-                    b.Property<int>("ReviewId")
+                    b.Property<int>("TagId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    b.Property<string>("Critic")
-                        .HasColumnType("longtext");
 
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
 
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
+                    b.HasKey("TagId");
 
-                    b.HasKey("ReviewId");
-
-                    b.ToTable("Reviews");
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("BestRestaurants.Models.Restaurant", b =>
@@ -106,7 +100,7 @@ namespace BestRestaurants.Migrations
                     b.Navigation("Cuisine");
                 });
 
-            modelBuilder.Entity("BestRestaurants.Models.RestaurantReview", b =>
+            modelBuilder.Entity("BestRestaurants.Models.RestaurantTag", b =>
                 {
                     b.HasOne("BestRestaurants.Models.Restaurant", "Restaurant")
                         .WithMany("JoinEntities")
@@ -114,15 +108,15 @@ namespace BestRestaurants.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BestRestaurants.Models.Review", "Review")
+                    b.HasOne("BestRestaurants.Models.Tag", "Tag")
                         .WithMany("JoinEntities")
-                        .HasForeignKey("ReviewId")
+                        .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Restaurant");
 
-                    b.Navigation("Review");
+                    b.Navigation("Tag");
                 });
 
             modelBuilder.Entity("BestRestaurants.Models.Cuisine", b =>
@@ -135,7 +129,7 @@ namespace BestRestaurants.Migrations
                     b.Navigation("JoinEntities");
                 });
 
-            modelBuilder.Entity("BestRestaurants.Models.Review", b =>
+            modelBuilder.Entity("BestRestaurants.Models.Tag", b =>
                 {
                     b.Navigation("JoinEntities");
                 });

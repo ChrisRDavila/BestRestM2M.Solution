@@ -11,6 +11,6 @@ namespace BestRestaurants.Models
     [Range(1, int.MaxValue, ErrorMessage = "You must add your restaurant to a cuisine. Have you created a cuisine yet?")]
     public int CuisineId { get; set; }
     public Cuisine Cuisine { get; set; }
-    public List <RestaurantReview> JoinEntities { get; }
+    public List <RestaurantTag> JoinEntities { get; }
   }
 }

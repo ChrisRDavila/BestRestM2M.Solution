@@ -1,6 +1,7 @@
 @{
   Layout = "_Layout";
 }
+@using BestRestaurants.Models
 
 @model BestRestaurants.Models.Restaurant
 
@@ -9,6 +10,27 @@
 <h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)<h3>
 <h3>@Html.DisplayNameFor(model => model.Cuisine): @Html.DisplayFor(model => model.Cuisine.Type)<h3>
 
+@if(@Model.JoinEntities.Count == 0)
+{
+  <p>This item does not have any tags yet!</p>
+}
+else
+{
+  <h4>This restaurant has the following tags:</h4>
+  <ul>
+    @foreach(RestaurantTag join in Model.JoinEntities)
+    {
+      <li>@join.Tag.Description</li>
+      @using (Html.BeginForm("DeleteJoin", "Restaurants"))
+      {
+        @Html.Hidden("joinId", @join.RestaurantTagId)
+        <input type="submit" value="Delete"/>
+      }
+    }
+  </ul>
+}
+<hr>
+<p>@Html.ActionLink("Add a Tag", "AddTag", new { id = Model.RestaurantId })</p>
 <p>@Html.ActionLink("Edit Item", "Edit", new { id = Model.RestaurantId })</p>
 <p>@Html.ActionLink("Delete Item", "Delete", new { id = Model.RestaurantId })</p>
 <p>@Html.ActionLink("Back to list", "Index")</p>

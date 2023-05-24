@@ -30,18 +30,18 @@
   }
 </ul>
 
-<h4>Reviews</h4>
-@if (Model["reviews"].Length == 0)
+<h4>Tags</h4>
+@if (Model["tags"].Length == 0)
 {
-  <p>No reviews have been added yet!</p>
+  <p>No tags have been added yet!</p>
 }
 <ul>
-  @foreach (Review review in Model["reviews"])
+  @foreach (Tag tag in Model["tags"])
   {
-    <li>@Html.ActionLink(@review.Critic, "Details", "Reviews", new { id = @review.ReviewId})</li>
+    <li>@Html.ActionLink(@tag.Description, "Details", "tags", new { id = @tag.TagId})</li>
   }
 </ul>
 
 <p>@Html.ActionLink("See all restaurants", "Index", "Restaurants")</p>
 <p>@Html.ActionLink("See all cuisines", "Index", "Cuisines")</p>
-<p>@Html.ActionLink("See all reviews", "Index", "Reviews")</p>
+<p>@Html.ActionLink("See all tags", "Index", "Tags")</p>

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BestRestaurants.Models;
 using System.Collections.Generic;
+using System;
 using System.Linq;
 
 namespace BestRestaurants.Controllers
@@ -17,27 +18,16 @@ namespace BestRestaurants.Controllers
       [HttpGet("/")]
       public ActionResult Index()
       {
-        Cuisine[] cuisines = _db.Cuisines.ToArray();
-        Restaurant[] restaurants = _db.Restaurants.ToArray();
-        Review[] reviews = _db.Reviews.ToArray();
+        Cuisine[] cuisines = _db.Cuisines.OrderBy(cuisines => cuisines.Type).ToArray();
+        Restaurant[] restaurants = _db.Restaurants.OrderBy(restaurants => restaurants.Name).ToArray();
+        Tag[] tags = _db.Tags.ToArray();
         Dictionary<string,object[]> model = new Dictionary<string, object[]>();
         model.Add("cuisines", cuisines);
         model.Add("restaurants", restaurants);
-        model.Add("reviews", reviews);
+        model.Add("tags", tags);
 
         return View(model);
       }
 
     }
 }
-
-// using list and viewbag to pass categories and items into view
-// [HttpGet("/")]
-//       public ActionResult Index()
-//       {
-//         List<Category> cats = _db.Categories.ToList();
-//         List<Item> items = _db.Items.ToList();
-//         ViewBag.categories = cats;
-//         ViewBag.items = items;
-//         return View();
-//       }

@@ -5,73 +5,70 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BestRestaurants.Migrations
 {
-    public partial class addReviewTable : Migration
+    public partial class RefactorTag : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Reviews",
+                name: "Tags",
                 columns: table => new
                 {
-                    ReviewId = table.Column<int>(type: "int", nullable: false)
+                    TagId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Critic = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Description = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Rating = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reviews", x => x.ReviewId);
+                    table.PrimaryKey("PK_Tags", x => x.TagId);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "RestaurantReviews",
+                name: "RestaurantTags",
                 columns: table => new
                 {
-                    RestaurantReviewId = table.Column<int>(type: "int", nullable: false)
+                    RestaurantTagId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     RestaurantId = table.Column<int>(type: "int", nullable: false),
-                    ReviewId = table.Column<int>(type: "int", nullable: false)
+                    TagId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RestaurantReviews", x => x.RestaurantReviewId);
+                    table.PrimaryKey("PK_RestaurantTags", x => x.RestaurantTagId);
                     table.ForeignKey(
-                        name: "FK_RestaurantReviews_Restaurants_RestaurantId",
+                        name: "FK_RestaurantTags_Restaurants_RestaurantId",
                         column: x => x.RestaurantId,
                         principalTable: "Restaurants",
                         principalColumn: "RestaurantId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_RestaurantReviews_Reviews_ReviewId",
-                        column: x => x.ReviewId,
-                        principalTable: "Reviews",
-                        principalColumn: "ReviewId",
+                        name: "FK_RestaurantTags_Tags_TagId",
+                        column: x => x.TagId,
+                        principalTable: "Tags",
+                        principalColumn: "TagId",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RestaurantReviews_RestaurantId",
-                table: "RestaurantReviews",
+                name: "IX_RestaurantTags_RestaurantId",
+                table: "RestaurantTags",
                 column: "RestaurantId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RestaurantReviews_ReviewId",
-                table: "RestaurantReviews",
-                column: "ReviewId");
+                name: "IX_RestaurantTags_TagId",
+                table: "RestaurantTags",
+                column: "TagId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "RestaurantReviews");
+                name: "RestaurantTags");
 
             migrationBuilder.DropTable(
-                name: "Reviews");
+                name: "Tags");
         }
     }
 }
