@@ -4,44 +4,52 @@
 @using BestRestaurants.Models;
 
 <h1>Welcome to the Best Restaurants App!</h1>
-<hr>
+<hr><br>
 
-<h4>Cuisines</h4>
-@if (Model["cuisines"].Length == 0)
-{
-  <p>No cuisines have been added yet!</p>
-}
-<ul>
-  @foreach (Cuisine cuisine in Model["cuisines"])
-  {
-    <li>@Html.ActionLink(@cuisine.Type, "Details", "Cuisines", new { id = @cuisine.CuisineId})</li>
-  }
-</ul>
 
-<h4>Restaurants</h4>
-@if (Model["restaurants"].Length == 0)
-{
-  <p>No restaurants have been added yet!</p>
-}
-<ul>
-  @foreach (Restaurant restaurant in Model["restaurants"])
-  {
-    <li>@Html.ActionLink(@restaurant.Name, "Details", "Restaurants", new { id = @restaurant.RestaurantId})</li>
-  }
-</ul>
 
-<h4>Tags</h4>
-@if (Model["tags"].Length == 0)
-{
-  <p>No tags have been added yet!</p>
-}
-<ul>
-  @foreach (Tag tag in Model["tags"])
-  {
-    <li>@Html.ActionLink(@tag.Description, "Details", "tags", new { id = @tag.TagId})</li>
-  }
-</ul>
+<div class="row align-items-start">
+  <div class="col">
+    <h4>Cuisines</h4>
+    @if (Model["cuisines"].Length == 0)
+    {
+      <p>No cuisines have been added yet!</p>
+    }
+    <ul>
+      @foreach (Cuisine cuisine in Model["cuisines"])
+      {
+        <li>@Html.ActionLink(@cuisine.Type, "Details", "Cuisines", new { id = @cuisine.CuisineId})</li>
+      }
+    </ul>
+  </div>
+  <div class="col">
+    <h4>Restaurants</h4>
+    @if (Model["restaurants"].Length == 0)
+    {
+      <p>No restaurants have been added yet!</p>
+    }
+    <ul>
+      @foreach (Restaurant restaurant in Model["restaurants"])
+      {
+        <li>@Html.ActionLink(@restaurant.Name, "Details", "Restaurants", new { id = @restaurant.RestaurantId})</li>
+      }
+    </ul>
+  </div>
+  <div class="col">
+    <h4>Tags</h4>
+    @if (Model["tags"].Length == 0)
+    {
+      <p>No tags have been added yet!</p>
+    }
+    <ul>
+      @foreach (Tag tag in Model["tags"])
+      {
+        <li>@Html.ActionLink(@tag.Description, "Details", "tags", new { id = @tag.TagId})</li>
+      }
+    </ul>
+  </div>
+</div>
 
-<p>@Html.ActionLink("See all restaurants", "Index", "Restaurants")</p>
+<!-- <p>@Html.ActionLink("See all restaurants", "Index", "Restaurants")</p>
 <p>@Html.ActionLink("See all cuisines", "Index", "Cuisines")</p>
-<p>@Html.ActionLink("See all tags", "Index", "Tags")</p>
+<p>@Html.ActionLink("See all tags", "Index", "Tags")</p> -->
