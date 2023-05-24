@@ -20,5 +20,27 @@ namespace BestRestaurants.Controllers
     {
       return View(_db.Reviews.ToList());
     }
+
+    public ActionResult Details(int id)
+    {
+      Review thisReview = _db.Reviews
+          .Include(review => review.JoinEntities)
+          .ThenInclude(join => join.Restaurant)
+          .FirstOrDefault(review => review.ReviewId == id);
+      return View(thisReview);
+    }
+
+    public ActionResult Create()
+    {
+      return View();
+    }
+
+    [HttpPost]
+    public ActionResult Create(Review review)
+    {
+      _db.Reviews.Add(review);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
   }
 }    
