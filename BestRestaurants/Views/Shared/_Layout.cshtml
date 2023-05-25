@@ -11,9 +11,11 @@
     <link rel="stylesheet" href="~/css/styles.css">
   </head>
   <body>
-      @await Html.PartialAsync("navbar")
+      @await Html.PartialAsync("navbar")  
     <div class="container">
-      @RenderBody()
+      <div class="fade-in-down">
+        @RenderBody()
+      </div>
     </div>
       @await Html.PartialAsync("footer")
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
