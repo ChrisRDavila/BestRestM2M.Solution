@@ -24,6 +24,8 @@ body {
 	margin-bottom: 150px;
   opacity: 85%;
 	text-align: justify;
+	display: block;
+	box-sizing: border-box;
 }
 
 a
